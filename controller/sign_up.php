@@ -1,8 +1,7 @@
 <?php 
 include "../config/db_connexion.php";
-if (!empty($_SESSION['id'])) {
+if (!empty($_SESSION["id"])) {
     header('location: ../page/admin/dashboard.php');
-
 }
 if (isset($_POST['submit'])) {
     $username = $_POST['username'];
@@ -21,8 +20,8 @@ if (isset($_POST['submit'])) {
             echo "<script>alert('Username or email has already been taken');</script>";
         } else {
             if ($password == $c_password) {
-                // // Hash the password before storing it in the database
-                // $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                // Hash the password before storing it in the database
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
                 $insert_query = "INSERT INTO `user`(`id`, `name`, `email`, `password`) VALUES('', '$username', '$email', '$password')";
                 $insert_result = mysqli_query($db, $insert_query);

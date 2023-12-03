@@ -1,10 +1,20 @@
-
 <?php
+ session_start();
+$db = mysqli_connect("localhost","root","","minglemovie");
+
+if(!$db){
+    echo ('connection failed'.mysqli_connect_error());
+}
+else{
+    echo 'connected successfully';
+}
+?>
+<!-- 
     session_start();
-    include DIR . '/../vendor/autoload.php';
+    require_once __DIR__ . '/../vendor/autoload.php';
 
 
-    $dotenv = \Dotenv\Dotenv::createImmutable(DIR . '/../');
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
     $dotenv->load();
 
     $serverName = $_ENV["DB_SERVERNAME"];
@@ -16,5 +26,4 @@
 
     if(isset($connexion->connect_error)){
         die('error connection here '. $connexion->connect_error);
-    }
-?>
+    } -->

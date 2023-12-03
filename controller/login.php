@@ -1,32 +1,37 @@
-
 <?php 
 include "../config/db_connexion.php";
-if (!empty($_SESSION['id'])) {
-    header('location: ../page/admin/dashboard.php');
 
+if (!empty($_SESSION["id"])) {
+    header('location: ../page/admin/dashboard.php');
 }
+
 if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $query = "SELECT * FROM `user` WHERE `email`='$email'";
-    $result = mysqli_query($db, $query);
-    $row=mysqli_fetch_assoc($result);
+
+    // Use prepared statement to prevent SQL injection
+    $query = "SELECT * FROM `user` WHERE `email`=?";
+    $stmt = mysqli_prepare($db, $query);
+    mysqli_stmt_bind_param($stmt, "s", $email);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
     if (mysqli_num_rows($result) > 0) {
-       if($password=$_POST['password']){
-        $_SESSION['login']=true;
-        $_SESSION['id']=$row['id'];
-        header('location: ../page/admin/dashboard.php');
-       }else{
-        echo "<script>alert('wrong password');</script>";
-
-       }
-    }
-    else{
+        $rowS = mysqli_fetch_assoc($result);
+        if ($password === $rowS['password']) {
+            $_SESSION['login'] = true;
+            $_SESSION['id'] = $rowS['id'];
+            header('location: ../page/admin/dashboard.php');
+            exit();
+        } else {
+            echo "<script>alert('Wrong password');</script>";
+        }
+    } else {
         echo "<script>alert('User not registered');</script>";
-
-       }
+    }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

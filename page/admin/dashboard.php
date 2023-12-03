@@ -1,8 +1,10 @@
 <?php
-include "../config/db_connexion.php";
+include "../../config/db_connexion.php";
 if (!empty($_SESSION['id'])) {
    $id=$_SESSION['id'];
-   
+   $user_query = "SELECT * FROM `user` WHERE `id`='$id'";
+    $result = mysqli_query($db, $user_query);
+    $row = mysqli_fetch_assoc($result);
 
 }else{
    header('location: ../../controller/login.php');
@@ -57,7 +59,7 @@ if (!empty($_SESSION['id'])) {
                <div class="side-content d-flex flex-column align-items-center  ">
                   <div class="profil d-flex flex-column align-items-center gap-3">
                      <img src="img-dash/user.png" alt="">
-                     <span class="d-none d-md-inline">admin</span>
+                     <span class="d-none d-md-inline"><?php echo $row['name'];?></span>
                   </div>
                   <ul class="nav d-flex flex-column">
                      <li><a href="index.php" class="text-decoration-none text-warning px-4 py-2"><i
