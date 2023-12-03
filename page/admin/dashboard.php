@@ -62,11 +62,11 @@ if (!empty($_SESSION['id'])) {
                      <span class="d-none d-md-inline"><?php echo $row['name'];?></span>
                   </div>
                   <ul class="nav d-flex flex-column">
-                     <li><a href="index.php" class="text-decoration-none text-warning px-4 py-2"><i
+                     <li><a href="dashboard.php" class="text-decoration-none text-warning px-4 py-2"><i
                         class=" fa-solid fa-border-all"></i>
                         <span class="d-none d-md-inline text-warning">Dashboard</span></a>
                      </li>
-                     <li><a href="movies.php" class="text-decoration-none text-white px-4 py-2"><i
+                     <li><a href="./movies/show.php" class="text-decoration-none text-white px-4 py-2"><i
                         class=" fa-regular fa-heart"></i> <span
                         class="d-none d-md-inline text-white">Movies</span></a>
                      </li>
@@ -74,7 +74,7 @@ if (!empty($_SESSION['id'])) {
                         class=" fa-regular fa-bookmark"></i>
                         <span class="d-none d-md-inline ">Series</span></a>
                      </li>
-                     <li><a href="categorie.php" class="text-decoration-none text-white px-4 py-2"><i
+                     <li><a href="./categories/show.php" class="text-decoration-none text-white px-4 py-2"><i
                         class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">Categorie</span></a>
                      </li>
                      <li><a href="../../controller/log_out.php" class="text-decoration-none text-white px-4 py-2"><i
