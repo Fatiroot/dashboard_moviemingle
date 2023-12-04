@@ -1,6 +1,5 @@
 <?php
-include "../../../function/movie.php";   
-
+include "../../../function/cast.php";   
  if (!empty($_SESSION['id'])) {
     $id=$_SESSION['id'];
     $user_query = "SELECT * FROM `user` WHERE `id`='$id'";
@@ -8,10 +7,11 @@ include "../../../function/movie.php";
      $row = mysqli_fetch_assoc($result);
  
  }else{
-    header('location: ../../controller/login.php');
- } 
- $id = $_GET["id"];
- updatemovie($connexion,$id)
+    header('location: ../../../controller/login.php');
+ }  
+ 
+ $id=$_GET['id'];
+   updatecast($connexion, $id);
    
    ?>
 <!DOCTYPE html>
@@ -27,7 +27,7 @@ include "../../../function/movie.php";
       <!-- Font Awesome -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       <link rel="stylesheet" href="../../../assets/css/dash.css">
-      <title>show movies</title>
+      <title>update cast</title>
    </head>
    <body class=" bg-black">
       <nav>
@@ -64,15 +64,15 @@ include "../../../function/movie.php";
                      class=" fa-solid fa-border-all"></i>
                      <span class="d-none d-md-inline">Dashboard</span></a>
                   </li>
-                  <li><a href="show.php" class="text-decoration-none text-warning px-4 py-2"><i
+                  <li><a href="../movies/show.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-regular fa-heart"></i> <span
-                     class="d-none d-md-inline text-warning">Movies</span></a>
+                     class="d-none d-md-inline text-white">Movies</span></a>
                   </li>
-                  <li><a href="./categorie/show.php" class="text-decoration-none text-white px-4 py-2"><i
+                  <li><a href="../categories/show.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">Categorie</span></a>
                   </li>
-                  <li><a href="../cast/show.php" class="text-decoration-none text-white px-4 py-2"><i
-                     class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">Cast</span></a>
+                  <li><a href="show.php" class="text-decoration-none text-warning px-4 py-2"><i
+                     class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-warning">Cast</span></a>
                   </li>
                   <li><a href="../../../controller/log_out.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-solid fa-arrow-right-from-bracket"></i> <span
@@ -86,11 +86,11 @@ include "../../../function/movie.php";
          <div class="content d-flex flex-column align-items-center gap-5 m-1 col-md-9 col-9 min-vh-100 p-2 p-md-5">
          <div class="container">
             <div class="text-center mb-4">
-               <h3 class='text-warning'>Edit Movie Information</h3>
+               <h3 class='text-warning'>Edit cast Information</h3>
                <p class="text-muted">Click update after changing any information</p>
             </div>
             <?php
-               $sql = "SELECT * FROM `movie` WHERE id = $id";
+               $sql = "SELECT * FROM `cast` WHERE id = $id";
                $result = mysqli_query($connexion, $sql);
                $row = mysqli_fetch_assoc($result);
                ?>
@@ -98,44 +98,10 @@ include "../../../function/movie.php";
                <form action="" method="post" style="width:50vw; min-width:300px;">
                   <div class="row mb-3">
                      <div class="col">
-                        <label class="form-label text-white" >Title</label>
-                        <input type="text" class="form-control" name="title" value="<?php echo $row['title'] ?>">
+                        <label class="form-label text-white" >name:</label>
+                        <input type="text" class="form-control" name="name" value="<?php echo $row['name'] ?>">
                      </div>
-                     <div class="col">
-                        <label class="form-label text-white">year_of_release</label>
-                        <input type="text" class="form-control" name="year_of_release" value="<?php echo $row['year_of_release'] ?>">
                      </div>
-                  </div>
-                  <div class=" row mb-3">
-                     <div class="col">
-                        <label class="form-label text-white">duration</label>
-                        <input type="text" class="form-control" name="duration" value="<?php echo $row['duration'] ?>">
-                     </div>
-                     <div class="col">
-                        <label class="form-label text-white">country</label>
-                        <input type="text" class="form-control" name="country" value="<?php echo $row['country'] ?>">
-                     </div>
-                  </div>
-                  <div class=" mb-3">
-                     <div class="col">
-                        <label class="form-label text-white">categorie</label>
-                        <select class="form-select mb-3" aria-label="Default select example" name="genre">
-                           <?php
-                              $sql = "SELECT * FROM `categorie`";
-                               $result = mysqli_query($connexion, $sql);
-                                   if ($result) {
-                              
-                                        while ($row = mysqli_fetch_array($result)) {
-                                  ?>
-                           <option value="<?=$row['id']?>"><?=$row['name']?></option>
-                           <?php
-                              }
-                              
-                              }
-                              ?>
-                        </select>
-                     </div>
-                  </div>
                   <div>
                      <button type="submit" class="btn btn-success" name="submit">Update</button>
                      <a href="show.php" class="btn btn-danger">Cancel</a>
@@ -144,6 +110,5 @@ include "../../../function/movie.php";
             </div>
          </div>
       </section>
-      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
    </body>
 </html>

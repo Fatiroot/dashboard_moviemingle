@@ -68,7 +68,7 @@ if (!empty($_SESSION['id'])) {
                      </li>
                      <li><a href="./movies/show.php" class="text-decoration-none text-white px-4 py-2"><i
                         class=" fa-regular fa-heart"></i> <span
-                        class="d-none d-md-inline text-white">Movies</span></a>
+                        class="d-none d-md-inline text-white">favorite</span></a>
                      </li>
                      <li><a href="./categories/show.php" class="text-decoration-none text-white px-4 py-2"><i
                         class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">Categorie</span></a>

@@ -31,7 +31,7 @@ addcategorie($connexion);
       <!-- Font Awesome -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       <link rel="stylesheet" href="../../../assets/css/dash.css">
-      <title>show movies</title>
+      <title>show categorie</title>
    </head>
    <body class="bg-black">
       <nav>
@@ -60,7 +60,7 @@ addcategorie($connexion);
          <div class="sidebar col-auto col-md-3 min-vh-100 ">
             <div class="side-content d-flex flex-column align-items-center  ">
                <div class="profil d-flex flex-column align-items-center gap-3">
-                  <img src="img-dash/user.png" alt="">
+                  <img src="../../../images/user.png" alt="">
                   <span class="d-none d-md-inline"><?php echo $row['name'];?></span>
                </div>
                <ul class="nav d-flex flex-column">
@@ -74,6 +74,9 @@ addcategorie($connexion);
                   </li>
                   <li><a href="show.php" class="text-decoration-none text-warning px-4 py-2"><i
                      class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-warning">Categorie</span></a>
+                  </li>
+                  <li><a href="../cast/show.php" class="text-decoration-none text-white px-4 py-2"><i
+                     class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">Cast</span></a>
                   </li>
                   <li><a href="../../../controller/log_out.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-solid fa-arrow-right-from-bracket"></i> <span

@@ -30,7 +30,7 @@
       <nav>
          <div class="container d-flex justify-content-between gap-md-3 gap-lg-5 align-items-center position-relative">
             <div class="d-flex w-sm-100 align-items-center justify-content-between gap-3">
-               <div class="logo"><img class="img-fluid" src="./img-dash/logo.png" alt="logo"></div>
+               <div class="logo"><img class="img-fluid" src="../../../images/logo.png" alt="logo"></div>
                <div class="menu"><i class="fa-solid fa-bars burger-menu fs-3 text-white"></i></div>
             </div>
             <div class="search-wrapper flex-grow-1">
@@ -53,7 +53,7 @@
          <div class="sidebar col-auto col-md-3 min-vh-100 ">
             <div class="side-content d-flex flex-column align-items-center  ">
                <div class="profil d-flex flex-column align-items-center gap-3">
-                  <img src="img-dash/user.png" alt="">
+                  <img src="../../../images/user.png" alt="">
                   <span class="d-none d-md-inline"><?php echo $row['name'];?></span>
                </div>
                <ul class="nav d-flex flex-column">
@@ -68,6 +68,9 @@
                   <li><a href="../categories/show.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">Categorie</span></a>
                   </li>
+                  <li><a href="../cast/show.php" class="text-decoration-none text-white px-4 py-2"><i
+                     class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">Cast</span></a>
+                  </li>
                   <li><a href="../../../controller/log_out.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-solid fa-arrow-right-from-bracket"></i> <span
                      class="d-none d-md-inline">Log
@@ -80,7 +83,7 @@
          <div class="content d-flex flex-column align-items-center gap-5 m-1 col-md-9 col-9 min-vh-100 p-2 p-md-5">
             <div class="container">
                <a href="add.php" class="btn btn-warning mb-3">Add New Movie</a>
-               <table class="table table-hover text-center">
+               <table class="table table-hover text-center  ">
                   <thead class="table-warning">
                      <tr>
                         <th scope="col">Title</th>
