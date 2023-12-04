@@ -1,45 +1,47 @@
 <?php 
-include "../config/db_connexion.php";
+include  "../config/db_connexion.php";
 if (!empty($_SESSION["id"])) {
     header('location: ../page/admin/dashboard.php');
+    
 }
 if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $c_password = $_POST['c_password'];
-
+    $error='';
+    if (empty($username) || empty($email) || empty($password) || empty($c_password)) {
+        $error= " user name and Email and password are required";
+    }else{
     $user_exists_query = "SELECT * FROM `user` WHERE `name`='$username' OR `email`='$email'";
-    $result = mysqli_query($db, $user_exists_query);
+    $result = mysqli_query($connexion , $user_exists_query);
 
     if (!$result) {
-        // Query execution failed, handle the error
-        echo "Error: " . mysqli_error($db);
+       
+        echo "Error: " . mysqli_error($connexion );
     } else {
         if (mysqli_num_rows($result) > 0) {
-            echo "<script>alert('Username or email has already been taken');</script>";
+            $error= "Username or email has already been taken";
         } else {
             if ($password == $c_password) {
                 // Hash the password before storing it in the database
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
                 $insert_query = "INSERT INTO `user`(`id`, `name`, `email`, `password`) VALUES('', '$username', '$email', '$password')";
-                $insert_result = mysqli_query($db, $insert_query);
+                $insert_result = mysqli_query($connexion , $insert_query);
 
                 if ($insert_result) {
-                    echo "<script>alert('Registration successful');</script>";
+                   header('location: login.php');
                 } else {
-                    echo "Error: " . mysqli_error($db);
+                    echo "Error: " . mysqli_error($connexion );
                 }
             } else {
-                echo "<script>alert('Password does not match');</script>";
+                $error= "Password does not match";
             }
         }
     }
-}
+}}
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,7 +81,7 @@ if (isset($_POST['submit'])) {
     <section class="sign-up">
         <div class="sign-up-container">
             <h1>Create account</h1>
-            <form id="form" method="post" action="sign_up.php">
+            <form id="form" method="post" >
                 <label for="form-username">Your Name</label>
                 <div class="form-controls">
                     <input type="text" name="username" id="form-username" placeholder="Your First and last name" class="input-pd">
@@ -104,6 +106,7 @@ if (isset($_POST['submit'])) {
                     <input type="password" name="c_password" id="form-confirmed-password" class="input-pd">
                     <small>Error message</small>
                 </div>
+                <span class=text-danger><?php if (isset($_POST['submit'])) {echo $error;}?></span>
                 <button type="submit" name="submit" id="submit">Create your MovieMingle account</button>
             </form>
             <p class="signin-link">Already have an account? <a href="./login.php">Sign in</a></p>
@@ -156,6 +159,6 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
     </footer>
-    <!-- <script src="../assets/js/sing-up.js"></script> -->
+    <script src="../assets/js/sing-up.js"></script>
 </body>
 </html>

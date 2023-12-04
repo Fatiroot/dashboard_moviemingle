@@ -1,26 +1,17 @@
 <?php
-include "../../../config/db_connexion.php";  
-if (!empty($_SESSION['id'])) {
+ include "../../../function/categorie.php";   
+
+ if (!empty($_SESSION['id'])) {
    $id=$_SESSION['id'];
    $user_query = "SELECT * FROM `user` WHERE `id`='$id'";
-    $result = mysqli_query($db, $user_query);
+    $result = mysqli_query($connexion , $user_query);
     $row = mysqli_fetch_assoc($result);
 
 }else{
    header('location: ../../../controller/login.php');
 }  
-if(isset($_POST['submit'])){
-   $nom=$_POST['genre'];
-   $description=$_POST['description'];
-   $sql_add="INSERT INTO `categorie`(`id`,`name`,`description`) VALUES (NULL,'$nom','$description')";
-   $result_add=mysqli_query($db,$sql_add);
-   if($result_add){
-       header('location: show.php?msg=categorie add successfuly');
-   }else {
-      echo "Failed: ".mysqli_error($db);
-   }
-   
-   }
+addcategorie($connexion);
+
    ?>
    
 <!DOCTYPE html>
@@ -77,18 +68,14 @@ if(isset($_POST['submit'])){
                      class=" fa-solid fa-border-all"></i>
                      <span class="d-none d-md-inline">Dashboard</span></a>
                   </li>
-                  <li><a href="show.php" class="text-decoration-none text-white px-4 py-2"><i
+                  <li><a href="../movies/show.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-regular fa-heart"></i> <span
                      class="d-none d-md-inline text-white">Movies</span></a>
                   </li>
-                  <li><a href="series.php" class="text-decoration-none text-white px-4 py-2"><i
-                     class=" fa-regular fa-bookmark"></i>
-                     <span class="d-none d-md-inline ">Series</span></a>
-                  </li>
-                  <li><a href="categorie.php" class="text-decoration-none text-warning px-4 py-2"><i
+                  <li><a href="show.php" class="text-decoration-none text-warning px-4 py-2"><i
                      class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-warning">Categorie</span></a>
                   </li>
-                  <li><a href="index.html" class="text-decoration-none text-white px-4 py-2"><i
+                  <li><a href="../../../controller/log_out.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-solid fa-arrow-right-from-bracket"></i> <span
                      class="d-none d-md-inline">Log
                      out</span></a>

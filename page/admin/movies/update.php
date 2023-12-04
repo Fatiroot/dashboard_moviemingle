@@ -1,33 +1,17 @@
 <?php
- include "../../../config/db_connexion.php";   
+include "../../../function/movie.php";   
+
  if (!empty($_SESSION['id'])) {
     $id=$_SESSION['id'];
     $user_query = "SELECT * FROM `user` WHERE `id`='$id'";
-     $result = mysqli_query($db, $user_query);
+     $result = mysqli_query($connexion , $user_query);
      $row = mysqli_fetch_assoc($result);
  
  }else{
     header('location: ../../controller/login.php');
  } 
  $id = $_GET["id"];
-   
-   if (isset($_POST["submit"])) {
-    $title= $_POST['title'];
-    $year_of_release= $_POST['year_of_release'];
-    $duration= $_POST['duration'];
-    $country= $_POST['country'];
-    $genre= $_POST['genre'];
-   
-     $sql = "UPDATE `movie` SET `title`='$title',`year_of_release`='$year_of_release',`duration`='$duration',`country`='$country',`categorie_id`='$genre' WHERE id = $id";
-   
-     $result = mysqli_query($db, $sql);
-   
-     if ($result) {
-       header("Location: show.php?msg=Data updated successfully");
-     } else {
-       echo "Failed: " . mysqli_error($db);
-     }
-   }
+ updatemovie($connexion,$id)
    
    ?>
 <!DOCTYPE html>
@@ -84,10 +68,6 @@
                      class=" fa-regular fa-heart"></i> <span
                      class="d-none d-md-inline text-warning">Movies</span></a>
                   </li>
-                  <li><a href="../series.php" class="text-decoration-none text-white px-4 py-2"><i
-                     class=" fa-regular fa-bookmark"></i>
-                     <span class="d-none d-md-inline  text-white ">Series</span></a>
-                  </li>
                   <li><a href="./categorie/show.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">Categorie</span></a>
                   </li>
@@ -108,7 +88,7 @@
             </div>
             <?php
                $sql = "SELECT * FROM `movie` WHERE id = $id";
-               $result = mysqli_query($db, $sql);
+               $result = mysqli_query($connexion, $sql);
                $row = mysqli_fetch_assoc($result);
                ?>
             <div class="container d-flex justify-content-center">
@@ -139,7 +119,7 @@
                         <select class="form-select mb-3" aria-label="Default select example" name="genre">
                            <?php
                               $sql = "SELECT * FROM `categorie`";
-                               $result = mysqli_query($db, $sql);
+                               $result = mysqli_query($connexion, $sql);
                                    if ($result) {
                               
                                         while ($row = mysqli_fetch_array($result)) {

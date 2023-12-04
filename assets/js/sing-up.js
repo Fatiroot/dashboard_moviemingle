@@ -4,8 +4,8 @@ const email = document.getElementById('form-email');
 const password = document.getElementById('form-password');
 const username = document.getElementById('form-username');
 
-form.addEventListener('submit', (e) =>{
-    e.preventDefault();
+form.addEventListener('keyup', function(){
+// e.preventDefault();
     checkInputs();
 })
 
@@ -60,3 +60,4 @@ function setSuccessFor(input){
     //add Error class
     formControl.className = 'form-controls success';
 }
+

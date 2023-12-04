@@ -1,11 +1,5 @@
 <?php
- include "../../../config/db_connexion.php";  
- $id = $_GET["id"];
-$sql = "DELETE FROM `movie` WHERE id = $id";
-$result = mysqli_query($db, $sql);
+include "../../../function/movie.php";   
 
-if ($result) {
-  header("Location: show.php?msg=Data deleted successfully");
-} else {
-  echo "Failed: " . mysqli_error($db);
-}
+ $id = $_GET["id"];
+ deletemovie($connexion,$id);

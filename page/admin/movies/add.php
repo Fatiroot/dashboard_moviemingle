@@ -1,32 +1,17 @@
 <?php
-include "../../../config/db_connexion.php";   
+include "../../../function/movie.php";   
+
 if (!empty($_SESSION['id'])) {
    $id=$_SESSION['id'];
    $user_query = "SELECT * FROM `user` WHERE `id`='$id'";
-    $result = mysqli_query($db, $user_query);
+    $result = mysqli_query($connexion , $user_query);
     $row = mysqli_fetch_assoc($result);
 
 }else{
    header('location: ../../../controller/login.php');
 } 
-   if (isset($_POST["submit"])) {
-       $title= $_POST['title'];
-       $year_of_release= $_POST['year_of_release'];
-       $duration= $_POST['duration'];
-       $country= $_POST['country'];
-       $genre= $_POST['genre'];
-   
-       $sql = "INSERT INTO `movie`(`id`, `title`, `year_of_release`, `duration`, `country`, `categorie_id`) VALUES (NULL,'$title','$year_of_release',
-       '$duration','$country','$genre')";
-   
-       $result = mysqli_query($db, $sql);
-       if ($result) {
-           header("Location: show.php?msg=New record created successfully");
-        } else {
-           echo "Failed: " . mysqli_error($db);
-        }
-   
-   }
+addmovie($connexion);
+
    ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,11 +67,7 @@ if (!empty($_SESSION['id'])) {
                      class=" fa-regular fa-heart"></i> <span
                      class="d-none d-md-inline text-warning">Movies</span></a>
                   </li>
-                  <li><a href="../series.php" class="text-decoration-none text-white px-4 py-2"><i
-                     class=" fa-regular fa-bookmark"></i>
-                     <span class="d-none d-md-inline  text-white ">Series</span></a>
-                  </li>
-                  <li><a href="show.php" class="text-decoration-none text-white px-4 py-2"><i
+                  <li><a href="../categories/show.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">Categorie</span></a>
                   </li>
                   <li><a href="../../../controller/log_out.php" class="text-decoration-none text-white px-4 py-2"><i
@@ -133,7 +114,7 @@ if (!empty($_SESSION['id'])) {
                            <select class="form-select mb-3" aria-label="Default select example" name="genre">
                               <?php
                                  $sql = "SELECT * FROM `categorie`";
-                                  $result1 = mysqli_query($db, $sql);
+                                  $result1 = mysqli_query($connexion, $sql);
                                       if ($result1) {
                                            while ($row1 = mysqli_fetch_array($result1)) {
                                      ?>

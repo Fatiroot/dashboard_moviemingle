@@ -3,7 +3,7 @@
  if (!empty($_SESSION['id'])) {
    $id=$_SESSION['id'];
    $user_query = "SELECT * FROM `user` WHERE `id`='$id'";
-    $result = mysqli_query($db, $user_query);
+    $result = mysqli_query($connexion , $user_query);
     $row = mysqli_fetch_assoc($result);
 
 }else{
@@ -65,11 +65,7 @@
                      class=" fa-regular fa-heart"></i> <span
                      class="d-none d-md-inline text-warning">Movies</span></a>
                   </li>
-                  <li><a href="series.php" class="text-decoration-none text-white px-4 py-2"><i
-                     class=" fa-regular fa-bookmark"></i>
-                     <span class="d-none d-md-inline ">Series</span></a>
-                  </li>
-                  <li><a href="categories/show.php" class="text-decoration-none text-white px-4 py-2"><i
+                  <li><a href="../categories/show.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">Categorie</span></a>
                   </li>
                   <li><a href="../../../controller/log_out.php" class="text-decoration-none text-white px-4 py-2"><i
@@ -98,12 +94,12 @@
                   <tbody>
                      <?php
                         $sql = "SELECT * FROM `movie`";
-                        $result = mysqli_query($db, $sql);
+                        $result = mysqli_query($connexion , $sql);
                         while ($row = mysqli_fetch_assoc($result)) {
                         ?>
                      <?php
                         $sql1 = "SELECT * FROM `categorie` WHERE `id` = " . $row['categorie_id'];
-                        $result1 = mysqli_query($db, $sql1);
+                        $result1 = mysqli_query($connexion, $sql1);
                         
                         if ($result1 && mysqli_num_rows($result1) > 0) {
                             $row1 = mysqli_fetch_assoc($result1);

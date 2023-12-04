@@ -1,9 +1,9 @@
 <?php
-include "../../config/db_connexion.php";
+include  "../../config/db_connexion.php";
 if (!empty($_SESSION['id'])) {
    $id=$_SESSION['id'];
    $user_query = "SELECT * FROM `user` WHERE `id`='$id'";
-    $result = mysqli_query($db, $user_query);
+    $result = mysqli_query($connexion , $user_query);
     $row = mysqli_fetch_assoc($result);
 
 }else{
@@ -69,10 +69,6 @@ if (!empty($_SESSION['id'])) {
                      <li><a href="./movies/show.php" class="text-decoration-none text-white px-4 py-2"><i
                         class=" fa-regular fa-heart"></i> <span
                         class="d-none d-md-inline text-white">Movies</span></a>
-                     </li>
-                     <li><a href="series.php" class="text-decoration-none text-white px-4 py-2"><i
-                        class=" fa-regular fa-bookmark"></i>
-                        <span class="d-none d-md-inline ">Series</span></a>
                      </li>
                      <li><a href="./categories/show.php" class="text-decoration-none text-white px-4 py-2"><i
                         class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">Categorie</span></a>

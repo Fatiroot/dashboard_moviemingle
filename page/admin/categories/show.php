@@ -1,9 +1,9 @@
 <?php
- include "../../../config/db_connexion.php";    
+ include  "../../../config/db_connexion.php";    
  if (!empty($_SESSION['id'])) {
     $id=$_SESSION['id'];
     $user_query = "SELECT * FROM `user` WHERE `id`='$id'";
-     $result = mysqli_query($db, $user_query);
+     $result = mysqli_query($connexion , $user_query);
      $row = mysqli_fetch_assoc($result);
  
  }else{
@@ -65,10 +65,6 @@
                      class=" fa-regular fa-heart"></i> <span
                      class="d-none d-md-inline text-white">Movies</span></a>
                   </li>
-                  <li><a href="series.php" class="text-decoration-none text-white px-4 py-2"><i
-                     class=" fa-regular fa-bookmark"></i>
-                     <span class="d-none d-md-inline ">Series</span></a>
-                  </li>
                   <li><a href="show.php" class="text-decoration-none text-warning px-4 py-2"><i
                      class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-warning">Categorie</span></a>
                   </li>
@@ -95,7 +91,7 @@
                   <tbody>
                      <?php
                         $sql = "SELECT * FROM `categorie`";
-                        $result = mysqli_query($db, $sql);
+                        $result = mysqli_query($connexion, $sql);
                         while ($row = mysqli_fetch_assoc($result)) {
                         ?>
                      <tr>
@@ -104,7 +100,7 @@
 
                         <td>
                         <a href="update.php?id=<?php echo $row["id"] ?>" class="link-dark"><i class="fa-solid fa-pen-to-square fs-5 " style="color: #efbd0b;"></i></a>
-                           <a href="delete.php?id=<?php echo $row["id"] ?>" class="link-dark"><i class="fa-solid fa-trash fs-5" style="color: #f00000;"></i></a>
+                        <a href="delete.php?id=<?php echo $row["id"] ?>" class="link-dark"><i class="fa-solid fa-trash fs-5" style="color: #f00000;"></i></a>
                         </td>
                      </tr>
                      

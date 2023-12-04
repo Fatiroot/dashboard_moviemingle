@@ -1,27 +1,17 @@
 <?php
- include "../../../config/db_connexion.php";  
+include "../../../function/categorie.php";   
  if (!empty($_SESSION['id'])) {
     $id=$_SESSION['id'];
     $user_query = "SELECT * FROM `user` WHERE `id`='$id'";
-     $result = mysqli_query($db, $user_query);
+     $result = mysqli_query($connexion , $user_query);
      $row = mysqli_fetch_assoc($result);
  
  }else{
     header('location: ../../../controller/login.php');
  }  
-    $id=$_GET['id'];
-   if(isset($_POST['submit'])){
-       $nom=$_POST['genre'];
-       $description=$_POST['description'];
-       $sql_edit="UPDATE `categorie` SET `name`='$nom',`description`='$description' WHERE `id`='$id'";    
-      $result= mysqli_query($db,$sql_edit);
-       if ($result) {
-        header("Location: show.php?msg=Data updated successfully");
-      } else {
-        echo "Failed: " . mysqli_error($db);
-      }
-     
-       } 
+ 
+ $id=$_GET['id'];
+   updatecategorie($connexion, $id);
    
    ?>
 <!DOCTYPE html>
@@ -74,13 +64,9 @@
                      class=" fa-solid fa-border-all"></i>
                      <span class="d-none d-md-inline">Dashboard</span></a>
                   </li>
-                  <li><a href="show.php" class="text-decoration-none text-white px-4 py-2"><i
+                  <li><a href="../movies/show.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-regular fa-heart"></i> <span
                      class="d-none d-md-inline text-white">Movies</span></a>
-                  </li>
-                  <li><a href="../series.php" class="text-decoration-none text-white px-4 py-2"><i
-                     class=" fa-regular fa-bookmark"></i>
-                     <span class="d-none d-md-inline  text-white ">Series</span></a>
                   </li>
                   <li><a href="show.php" class="text-decoration-none text-warning px-4 py-2"><i
                      class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-warning">Categorie</span></a>
@@ -102,7 +88,7 @@
             </div>
             <?php
                $sql = "SELECT * FROM `categorie` WHERE id = $id";
-               $result = mysqli_query($db, $sql);
+               $result = mysqli_query($connexion, $sql);
                $row = mysqli_fetch_assoc($result);
                ?>
             <div class="container d-flex justify-content-center">

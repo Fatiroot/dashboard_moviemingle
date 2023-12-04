@@ -1,36 +1,65 @@
 <?php 
-include "../config/db_connexion.php";
+include  '../config/db_connexion.php';
+
 
 if (!empty($_SESSION["id"])) {
     header('location: ../page/admin/dashboard.php');
+    exit();
 }
 
 if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $error='';
 
-    // Use prepared statement to prevent SQL injection
-    $query = "SELECT * FROM `user` WHERE `email`=?";
-    $stmt = mysqli_prepare($db, $query);
-    mysqli_stmt_bind_param($stmt, "s", $email);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    if (mysqli_num_rows($result) > 0) {
-        $rowS = mysqli_fetch_assoc($result);
-        if ($password === $rowS['password']) {
-            $_SESSION['login'] = true;
-            $_SESSION['id'] = $rowS['id'];
-            header('location: ../page/admin/dashboard.php');
-            exit();
-        } else {
-            echo "<script>alert('Wrong password');</script>";
-        }
+    // Check for empty fields
+    if (empty($email) || empty($password)) {
+        $error= "Email and password are required";
     } else {
-        echo "<script>alert('User not registered');</script>";
-    }
-}
+        // Use prepared statement to prevent SQL injection
+        $query = "SELECT * FROM `user` WHERE `email`= ?";
+        $stmt = mysqli_prepare($connexion , $query);
+        mysqli_stmt_bind_param($stmt, "s", $email);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        if ($result && mysqli_num_rows($result) > 0) {
+            $rowS = mysqli_fetch_assoc($result);
+            if ($password === $rowS['password']) {
+                $user_role = $rowS['is_admin'];
+                $_SESSION['login'] = true;
+                $_SESSION['id'] = $rowS['id'];
+                // Check user role and redirect accordingly
+                if ($user_role == 1) {
+                     header('location: ../page/admin/dashboard.php');
+                    exit();
+                    } elseif ($user_role == 0) {
+                         header('location: ../page/user/dashboard.php');
+                         exit();
+                    } else {
+                         echo "Unknown user role')";
+                                }
+                    } else {
+                        $error= "Wrong password";
+                            }
+                        } else {
+                            $error= "User not registered";
+                        }
+                        }
+                        }
+                
+//                 header('location: ../page/admin/dashboard.php');
+//                 exit();
+//             } else {
+//                 echo "<script>alert('Wrong password');</script>";
+//             }
+//         } else {
+//             echo "<script>alert('User not registered');</script>";
+//         }
+//     }
+// }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -68,32 +97,19 @@ if (isset($_POST['submit'])) {
     <section class="sign-up sign-in d-flex align-item-center justify-content-center">
         <div class="sign-up-container">
             <h1>Login in</h1>
-            <form id="form" method="post" action="login.php">
-                <label for="form-username" class="d-none">Your Name</label>
-                <div class="form-controls d-none">
-                    <input type="text" name="username" id="form-username" placeholder="Your First and last name" class="input-pd d-none">
-                    <small class="d-none">Error message</small>
-                </div>
-
+            <form id="form" method="post" >
                 <label for="form-email">Email</label>
                 <div class="form-controls">
                     <input type="text" name="email" id="form-email" placeholder="Your Email" class="input-pd">
                     <small>Error message</small>
                 </div>
-    
                 <label for="form-password">Password</label>
                 <div class="form-controls">
                     <input type="password" name="password" id="form-password" placeholder="at least 8 characters" class="input-pd">
                     <p class="form-control-caracter d-none">Passwords must be at least 8 characters</p>
                     <small>Error message</small>
                 </div>
-
-                <label for="form-confirmed-password" class="d-none">Re-enter password</label>
-                <div class="form-controls d-none">
-                    <input type="password" name="c_password" id="form-confirmed-password" class="input-pd">
-                    <small>Error message</small>
-                </div>
-
+                <span class=text-danger><?php if (isset($_POST['submit'])) {echo $error;}?></span>
                 <button type="submit" name="submit" id="submit">Sign in</button>
             </form>
             <p class="signin-link">Don't have an account?<a href="./sign_up.php"> Sign up</a></p>
@@ -148,7 +164,7 @@ if (isset($_POST['submit'])) {
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous" ></script>
-    <!-- <script src="../assets/js/sing-up.js"></script> -->
+    <script src="../assets/js/sing-up.jss"></script>
 
 </body>
 </html>
