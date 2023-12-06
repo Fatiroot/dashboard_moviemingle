@@ -32,7 +32,7 @@ CREATE TABLE review (
     FOREIGN KEY (movie_id) REFERENCES movie(id)
 
 );
-CREATE TABLE status (
+CREATE TABLE favourit (
     id INT AUTO_INCREMENT PRIMARY KEY,
     status VARCHAR(255),
     user_id int,

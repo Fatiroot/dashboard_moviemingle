@@ -25,9 +25,9 @@ if (isset($_POST['submit'])) {
         } else {
             if ($password == $c_password) {
                 // Hash the password before storing it in the database
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
-                $insert_query = "INSERT INTO `user`(`id`, `name`, `email`, `password`) VALUES('', '$username', '$email', '$password')";
+                $insert_query = "INSERT INTO `user`(`id`, `name`, `email`, `password`) VALUES('', '$username', '$email', '$hashed_password')";
                 $insert_result = mysqli_query($connexion , $insert_query);
 
                 if ($insert_result) {

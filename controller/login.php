@@ -12,11 +12,10 @@ if (isset($_POST['submit'])) {
     $password = $_POST['password'];
     $error='';
 
-    // Check for empty fields
     if (empty($email) || empty($password)) {
         $error= "Email and password are required";
     } else {
-        // Use prepared statement to prevent SQL injection
+        // Use prepared statement 
         $query = "SELECT * FROM `user` WHERE `email`= ?";
         $stmt = mysqli_prepare($connexion , $query);
         mysqli_stmt_bind_param($stmt, "s", $email);
@@ -25,39 +24,28 @@ if (isset($_POST['submit'])) {
 
         if ($result && mysqli_num_rows($result) > 0) {
             $rowS = mysqli_fetch_assoc($result);
-            if ($password === $rowS['password']) {
-                $user_role = $rowS['is_admin'];
-                $_SESSION['login'] = true;
+            if (password_verify($password ,$rowS['password'])) {
+                // $_SESSION['login'] = true;
                 $_SESSION['id'] = $rowS['id'];
-                // Check user role and redirect accordingly
-                if ($user_role == 1) {
-                     header('location: ../page/admin/dashboard.php');
-                    exit();
-                    } elseif ($user_role == 0) {
+                $user_role = $rowS['is_admin'];
+                // Check user role :
+                     if ($user_role) {
+                        header('location: ../page/admin/dashboard.php');
+                         exit();
+                      } else {
                          header('location: ../page/user/dashboard.php');
                          exit();
-                    } else {
-                         echo "Unknown user role')";
-                                }
-                    } else {
-                        $error= "Wrong password";
+                        } 
+                    
+                } else {
+                     $error= "Wrong password";
                             }
-                        } else {
-                            $error= "User not registered";
-                        }
-                        }
-                        }
-                
-//                 header('location: ../page/admin/dashboard.php');
-//                 exit();
-//             } else {
-//                 echo "<script>alert('Wrong password');</script>";
-//             }
-//         } else {
-//             echo "<script>alert('User not registered');</script>";
-//         }
-//     }
-// }
+                    } else {
+                         $error= "User not registered";
+                    }
+     }
+}
+    
 ?>
 
 
