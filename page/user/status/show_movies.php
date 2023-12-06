@@ -1,18 +1,34 @@
 <?php
- include "../../../config/db_connexion.php";
-  
- if (!empty($_SESSION['id'])) {
-   $id=$_SESSION['id'];
-   $user_query = "SELECT * FROM `user` WHERE `id`='$id'";
-    $result = mysqli_query($connexion , $user_query);
-    $row = mysqli_fetch_assoc($result);
+include "../../../function/favourit.php"; 
+ 
 
-}else{
+if (empty($_SESSION['id'])) {
    header('location: ../../../controller/login.php');
+   exit();
 }
 
+$id = $_SESSION['id'];
+ 
+$user_query = "SELECT * FROM `user` WHERE `id`='$id'";
+$result = mysqli_query($connexion, $user_query);
+$row = mysqli_fetch_assoc($result);
 
-   ?>
+if (isset($_GET['favoris'])) {
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        addfavourit($connexion, $id);
+    }
+} elseif (isset($_GET['to_watch'])) {
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        addtowatch($connexion, $id);
+    }
+}
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -37,8 +53,9 @@
                <div class="menu"><i class="fa-solid fa-bars burger-menu fs-3 text-white"></i></div>
             </div>
             <div class="search-wrapper flex-grow-1">
-               <input class="py-2 px-3 rounded-2 w-100 border-0 d-none d-md-block" type="text" placeholder="Search">
+               <input onkeyup='search()' class="py-2 px-3 rounded-2 w-100 border-0 d-none d-md-block" id='input_search'type="text" placeholder="Search">
             </div>
+            
             <div class="sign-in-wrapper d-flex align-items-center gap-3">
                <a href="./MoviesSeries.html" class="fw-semibold text-white d-none d-md-block"> Watchlist</a>
                <a href="./sign-in.html" class="fw-bold text-white d-none d-md-block">signIn</a>
@@ -64,15 +81,15 @@
                      class=" fa-solid fa-border-all"></i>
                      <span class="d-none d-md-inline">Dashboard</span></a>
                   </li>
-                  <li><a href="show_movies.php" class="text-decoration-none text-white px-4 py-2"><i
+                  <li><a href="show_movies.php" class="text-decoration-none text-warning px-4 py-2"><i
                      class=" fa-regular fa-heart"></i> <span
-                     class="d-none d-md-inline text-white">Movies</span></a>
+                     class="d-none d-md-inline text-warning">Movies</span></a>
                   </li>
-                  <li><a href="show.php" class="text-decoration-none text-warning px-4 py-2"><i
-                     class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-warning">favourit</span></a>
+                  <li><a href="show_favoris.php" class="text-decoration-none text-white px-4 py-2"><i
+                     class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">favoris</span></a>
                   </li>
-                  <li><a href="../cast/show.php" class="text-decoration-none text-white px-4 py-2"><i
-                     class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">Cast</span></a>
+                  <li><a href="show_to-watch.php" class="text-decoration-none text-white px-4 py-2"><i
+                     class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">To-Watch</span></a>
                   </li>
                   <li><a href="../../../controller/log_out.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-solid fa-arrow-right-from-bracket"></i> <span
@@ -88,20 +105,22 @@
                <table class="table table-hover text-center  ">
                   <thead class="table-warning">
                      <tr>
-                        <th scope="col">movie</th>
-                        <!-- <th scope="col">Categorie</th> -->
+                        <th scope="col">Title</th>
+                        <th scope="col">year_of_release</th>
+                        <th scope="col">duration</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Categorie</th>
                         <th scope="col">Action</th>
                      </tr>
                   </thead>
-                  <tbody>
+                  <tbody id='contenu_change'>
                      <?php
-                     
-                     $sql_add="SELECT * FROM `favoris` ";
-                     $result_add=mysqli_query($connexion ,$sql_add);
-                        while ($row = mysqli_fetch_assoc($result_add)) {
+                        $sql = "SELECT * FROM `movie`";
+                        $result = mysqli_query($connexion , $sql);
+                        while ($row = mysqli_fetch_assoc($result)) {
                         ?>
                      <?php
-                        $sql1 = "SELECT * FROM `movie` WHERE `id` = " . $row['movie_id'];
+                        $sql1 = "SELECT * FROM `categorie` WHERE `id` = " . $row['categorie_id'];
                         $result1 = mysqli_query($connexion, $sql1);
                         
                         if ($result1 && mysqli_num_rows($result1) > 0) {
@@ -109,9 +128,26 @@
                         }
                         ?>
                      <tr>
-                        <td class='text-white'><?php echo $row1["title"] ?></td>
+                        <td class='text-white'><?php echo $row["title"] ?></td>
+                        <td class='text-white'><?php echo $row["year_of_release"] ?></td>
+                        <td class='text-white'><?php echo $row["duration"] ?> min</td>
+                        <td class='text-white'><?php echo $row["country"] ?></td>
+                        <td class='text-white'><?php echo $row1["name"] ?></td>
                         <td>
-                           <a href="delete.php?id=<?php echo $row["id"] ?>" class="link-dark"><i class="fa-solid fa-trash fs-5" style="color: #f00000;"></i></a>
+
+                     <form action="show_movies.php" method="GET">
+                             <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                              <button type="submit" name="favoris" style="background: none; border: none;">
+                              <i class="fa-regular fa-heart" style="color: #efbd0b;"></i>
+                             </button>
+                       </form>
+
+                    <form action="show_movies.php" method="GET">
+                          <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                          <button type="submit" name="to_watch" style="background: none; border: none;">
+                          <i class="fa-solid fa-bookmark" style="color: #efbd0b;"></i>
+                           </button>
+                    </form>
                         </td>
                      </tr>
                      <?php
@@ -123,6 +159,21 @@
          </div>
       </section>
       <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-     
+      <script>
+         function search(){
+            var input_search= document.getElementById('input_search');
+            var contenu_change= document.getElementById('contenu_change');
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+               if (this.readyState == 4 && this.status == 200) {
+                  contenu_change.innerHTML = xhttp.responseText;
+               }
+            };
+            var url = "search.php?movie_name="+input_search.value;
+            xhttp.open("GET", url, true);
+            xhttp.send();
+
+         }
+      </script>
    </body>
 </html>

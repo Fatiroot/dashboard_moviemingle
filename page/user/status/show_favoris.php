@@ -1,20 +1,18 @@
 <?php
-include "../../../function/favourit.php";   
+ include "../../../config/db_connexion.php";
+  
+ if (!empty($_SESSION['id'])) {
+   $id=$_SESSION['id'];
+   $user_query = "SELECT * FROM `user` WHERE `id`='$id'";
+    $result = mysqli_query($connexion , $user_query);
+    $row = mysqli_fetch_assoc($result);
 
-
-if (empty($_SESSION['id'])) {
+}else{
    header('location: ../../../controller/login.php');
-   exit();
 }
 
-$id = $_SESSION['id'];
- 
-$user_query = "SELECT * FROM `user` WHERE `id`='$id'";
-$result = mysqli_query($connexion, $user_query);
-$row = mysqli_fetch_assoc($result);
-addfavourit($connexion ,$id);
-?>
 
+   ?>
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -29,7 +27,7 @@ addfavourit($connexion ,$id);
       <!-- Font Awesome -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       <link rel="stylesheet" href="../../../assets/css/dash.css">
-      <title>show movies</title>
+      <title>show favoris</title>
    </head>
    <body class=" bg-black">
       <nav>
@@ -66,15 +64,15 @@ addfavourit($connexion ,$id);
                      class=" fa-solid fa-border-all"></i>
                      <span class="d-none d-md-inline">Dashboard</span></a>
                   </li>
-                  <li><a href="show_movies.php" class="text-decoration-none text-warning px-4 py-2"><i
+                  <li><a href="show_movies.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-regular fa-heart"></i> <span
-                     class="d-none d-md-inline text-warning">Movies</span></a>
+                     class="d-none d-md-inline text-white">Movies</span></a>
                   </li>
-                  <li><a href="show.php" class="text-decoration-none text-white px-4 py-2"><i
-                     class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">favourit</span></a>
+                  <li><a href="show_favoris.php" class="text-decoration-none text-warning px-4 py-2"><i
+                     class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-warning">favoris</span></a>
                   </li>
-                  <li><a href="../cast/show.php" class="text-decoration-none text-white px-4 py-2"><i
-                     class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">Cast</span></a>
+                  <li><a href="show_to-watch.php" class="text-decoration-none text-white px-4 py-2"><i
+                     class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">to watch</span></a>
                   </li>
                   <li><a href="../../../controller/log_out.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-solid fa-arrow-right-from-bracket"></i> <span
@@ -90,22 +88,20 @@ addfavourit($connexion ,$id);
                <table class="table table-hover text-center  ">
                   <thead class="table-warning">
                      <tr>
-                        <th scope="col">Title</th>
-                        <th scope="col">year_of_release</th>
-                        <th scope="col">duration</th>
-                        <th scope="col">Country</th>
-                        <th scope="col">Categorie</th>
+                        <th scope="col">movie</th>
+                        <!-- <th scope="col">Categorie</th> -->
                         <th scope="col">Action</th>
                      </tr>
                   </thead>
                   <tbody>
                      <?php
-                        $sql = "SELECT * FROM `movie`";
-                        $result = mysqli_query($connexion , $sql);
-                        while ($row = mysqli_fetch_assoc($result)) {
+                     
+                     $sql_add="SELECT * FROM `favoris` ";
+                     $result_add=mysqli_query($connexion ,$sql_add);
+                        while ($row = mysqli_fetch_assoc($result_add)) {
                         ?>
                      <?php
-                        $sql1 = "SELECT * FROM `categorie` WHERE `id` = " . $row['categorie_id'];
+                        $sql1 = "SELECT * FROM `movie` WHERE `id` = " . $row['movie_id'];
                         $result1 = mysqli_query($connexion, $sql1);
                         
                         if ($result1 && mysqli_num_rows($result1) > 0) {
@@ -113,14 +109,9 @@ addfavourit($connexion ,$id);
                         }
                         ?>
                      <tr>
-                        <td class='text-white'><?php echo $row["title"] ?></td>
-                        <td class='text-white'><?php echo $row["year_of_release"] ?></td>
-                        <td class='text-white'><?php echo $row["duration"] ?> min</td>
-                        <td class='text-white'><?php echo $row["country"] ?></td>
-                        <td class='text-white'><?php echo $row1["name"] ?></td>
+                        <td class='text-white'><?php echo $row1["title"] ?></td>
                         <td>
-                           <a href="show_movies.php?id=<?php echo $row["id"] ?>" class="link-dark"><i class=" fa-regular fa-heart" style="color: #efbd0b;"></i></a>
-                           <a href="to_watch.php?id=<?php echo $row["id"] ?>" class="link-dark"><i class="fa-solid fa-bookmark" style="color: #efbd0b;"></i></a>
+                           <a href="delete_favoris.php?id=<?php echo $row["id"] ?>" class="link-dark"><i class="fa-solid fa-trash fs-5" style="color: #f00000;"></i></a>
                         </td>
                      </tr>
                      <?php

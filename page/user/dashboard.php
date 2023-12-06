@@ -66,15 +66,15 @@ if (!empty($_SESSION['id'])) {
                         class=" fa-solid fa-border-all"></i>
                         <span class="d-none d-md-inline text-warning">Dashboard</span></a>
                      </li>
-                     <li><a href="./favourits/show_movies.php" class="text-decoration-none text-white px-4 py-2"><i
+                     <li><a href="./status/show_movies.php" class="text-decoration-none text-white px-4 py-2"><i
                         class=" fa-regular fa-heart"></i> <span
                         class="d-none d-md-inline text-white">movies</span></a>
                      </li>
-                     <li><a href="./favourits/show.php" class="text-decoration-none text-white px-4 py-2"><i
-                        class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">favourit</span></a>
+                     <li><a href="./status/show_movies.php" class="text-decoration-none text-white px-4 py-2"><i
+                        class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">favoris</span></a>
                      </li>
-                     <li><a href="./cast/show.php" class="text-decoration-none text-white px-4 py-2"><i
-                     class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">Cast</span></a>
+                     <li><a href="./status/show_movies.php" class="text-decoration-none text-white px-4 py-2"><i
+                     class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">to watch </span></a>
                   </li>
                      <li><a href="../../controller/log_out.php" class="text-decoration-none text-white px-4 py-2"><i
                         class=" fa-solid fa-arrow-right-from-bracket"></i> <span
