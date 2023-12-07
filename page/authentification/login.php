@@ -1,12 +1,6 @@
 <?php 
 include  '../../function/login.php';
 
-
-if (!empty($_SESSION["id"])) {
-    header('location: ../admin/dashboard.php');
-    exit();
-}
-
  login($connexion);
 ?>
 

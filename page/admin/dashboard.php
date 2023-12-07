@@ -1,10 +1,10 @@
 <?php
 include  "../../config/db_connexion.php";
-// if ($_session['role']!= user' ) {
-//    header('location: ../authentification/login.php');
-//  }
+if ($_SESSION['role']!= 'admin' ) {
+   header('location: ../authentification/login.php');
+ }
 
-if (!empty($_SESSION['id']) ) {
+else if (!empty($_SESSION['id']) ) {
    $id=$_SESSION['id'];
    $user_query = "SELECT * FROM `user` WHERE `id`='$id'";
     $result = mysqli_query($connexion , $user_query);

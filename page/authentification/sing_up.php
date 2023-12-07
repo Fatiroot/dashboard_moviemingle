@@ -1,9 +1,6 @@
 <?php 
 include  "../../function/sing_up.php";
-if (!empty($_SESSION["id"])) {
-    header('location: ../admin/dashboard.php');
-    
-} 
+
 
 register($connexion);
 ?>
