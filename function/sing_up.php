@@ -10,7 +10,7 @@ function register($connexion){
         $password = $_POST['password'];
         $c_password = $_POST['c_password'];
         $error = ''; 
-       $_SESSION['error'] = ''; 
+        $_SESSION['error'] = ''; 
         
       
         if (empty($username) || empty($email) || empty($password) || empty($c_password)) {

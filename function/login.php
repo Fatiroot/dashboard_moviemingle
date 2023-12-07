@@ -14,7 +14,6 @@ if (isset($_POST['submit'])) {
     if (empty($email) || empty($password)) {
       $_SESSION['error'] = "Email and password are required";
     } else {
-        // Use prepared statement 
         $query = "SELECT * FROM `user` WHERE `email`= ?";
         $stmt = mysqli_prepare($connexion , $query);
         mysqli_stmt_bind_param($stmt, "s", $email);
