@@ -1,15 +1,18 @@
 <?php
-  include  '../config/db_connexion.php';
+  // include  '../config/db_connexion.php';
+  include(__DIR__ . '/../config/db_connexion.php');
+
 
   function login($connexion){
     
 if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $error='';
+    $error = ''; 
+    $_SESSION['error'] = ''; 
 
     if (empty($email) || empty($password)) {
-        $error= "Email and password are required";
+      $_SESSION['error'] = "Email and password are required";
     } else {
         // Use prepared statement 
         $query = "SELECT * FROM `user` WHERE `email`= ?";
@@ -23,21 +26,21 @@ if (isset($_POST['submit'])) {
             if (password_verify($password ,$rowS['password'])) {
                 // $_SESSION['login'] = true;
                 $_SESSION['id'] = $rowS['id'];
-                $user_role = $rowS['is_admin'];
+                $_SESSION['role'] = $rowS['is_admin'];
                 // Check user role :
-                     if ($user_role) {
-                        header('location: ../page/admin/dashboard.php');
+                     if ( $_SESSION['role']=='admin') {
+                        header('location: ../admin/dashboard.php');
                          exit();
                       } else {
-                         header('location: ../page/user/dashboard.php');
+                         header('location: ../user/dashboarduser.php');
                          exit();
                         } 
                     
                 } else {
-                     $error= "Wrong password";
+                  $_SESSION['error'] = "Wrong password";
                             }
                     } else {
-                         $error= "User not registered";
+                      $_SESSION['error'] = "User not registered";
                     }
      }
 }

@@ -1,9 +1,8 @@
 <?php
 include "../../../function/favourit.php"; 
- 
 
 if (empty($_SESSION['id'])) {
-   header('location: ../../../controller/login.php');
+   header('location: ../../authentification/login.php');
    exit();
 }
 
@@ -25,9 +24,6 @@ if (isset($_GET['favoris'])) {
     }
 }
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -77,7 +73,7 @@ if (isset($_GET['favoris'])) {
                   <span class="d-none d-md-inline"><?php echo $row['name'];?></span>
                </div>
                <ul class="nav d-flex flex-column">
-                  <li><a href="../dashboard.php" class="text-decoration-none text-white px-4 py-2"><i
+                  <li><a href="../dashboarduser.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-solid fa-border-all"></i>
                      <span class="d-none d-md-inline">Dashboard</span></a>
                   </li>
@@ -91,7 +87,7 @@ if (isset($_GET['favoris'])) {
                   <li><a href="show_to-watch.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">To-Watch</span></a>
                   </li>
-                  <li><a href="../../../controller/log_out.php" class="text-decoration-none text-white px-4 py-2"><i
+                  <li><a href="../../authentification/log_out.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-solid fa-arrow-right-from-bracket"></i> <span
                      class="d-none d-md-inline">Log
                      out</span></a>

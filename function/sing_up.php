@@ -1,15 +1,20 @@
 <?php
-include  "../config/db_connexion.php";
+// include  "../config/db_connexion.php";
+include(__DIR__ . '/../config/db_connexion.php');
 
-function register($connexion,$error){
+
+function register($connexion){
     if (isset($_POST['submit'])) {
         $username = $_POST['username'];
         $email = $_POST['email'];
         $password = $_POST['password'];
         $c_password = $_POST['c_password'];
-       
+        $error = ''; 
+       $_SESSION['error'] = ''; 
+        
+      
         if (empty($username) || empty($email) || empty($password) || empty($c_password)) {
-            $error= " user name and Email and password are required";
+            $_SESSION['error']= " user name and Email and password are required";
         }else{
         $user_exists_query = "SELECT * FROM `user` WHERE `name`='$username' OR `email`='$email'";
         $result = mysqli_query($connexion , $user_exists_query);
@@ -19,7 +24,7 @@ function register($connexion,$error){
             echo "Error: " . mysqli_error($connexion );
         } else {
             if (mysqli_num_rows($result) > 0) {
-                $error= "Username or email has already been taken";
+                $_SESSION['error']= "Username or email has already been taken";
             } else {
                 if ($password == $c_password) {
                     // Hash the password before storing it in the database
@@ -34,7 +39,7 @@ function register($connexion,$error){
                         echo "Error: " . mysqli_error($connexion );
                     }
                 } else {
-                    $error= "Password does not match";
+                    $_SESSION['error']= "Password does not match";
                 }
             }
         }

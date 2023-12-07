@@ -1,12 +1,12 @@
 <?php 
-include  '../function/login.php';
+include  '../../function/login.php';
 
 
 if (!empty($_SESSION["id"])) {
-    header('location: ../page/admin/dashboard.php');
+    header('location: ../admin/dashboard.php');
     exit();
 }
- 
+
  login($connexion);
 ?>
 
@@ -20,14 +20,14 @@ if (!empty($_SESSION["id"])) {
     <title>Sign in page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/register.css">
+    <link rel="stylesheet" href="../../assets/css/register.css">
 
 </head>
 <body>
 <nav>
         <div class="container d-flex justify-content-between gap-md-3 gap-lg-5 align-items-center">
             <div class="d-flex w-sm-100 align-items-center justify-content-between gap-3">
-                <div class="logo"><img class="img-fluid" src="../images/logo.png" alt="logo"></div>
+                <div class="logo"><img class="img-fluid" src="../../images/logo.png" alt="logo"></div>
                 <div class="menu"><i class="fa-solid fa-bars fs-3 text-white"></i></div>
             </div>
             <div class="search-wrapper flex-grow-1">
@@ -59,8 +59,14 @@ if (!empty($_SESSION["id"])) {
                     <p class="form-control-caracter d-none">Passwords must be at least 8 characters</p>
                     <small>Error message</small>
                 </div>
-                <span class=text-danger><?php if (isset($_POST['submit'])) {echo $error;}?></span>
-                <button type="submit" name="submit" id="submit">Sign in</button>
+                <span class="text-danger">
+              <?php 
+               if (isset($_POST['submit'])) {
+                echo isset($_SESSION['error']) ? $_SESSION['error'] : '';
+            }
+             ?>
+           </span>   
+             <button type="submit" name="submit" id="submit">Sign in</button>
             </form>
             <p class="signin-link">Don't have an account?<a href="./sing_up.php"> Sign up</a></p>
         </div>
@@ -78,7 +84,7 @@ if (!empty($_SESSION["id"])) {
             <div class="mt-5 row">
                 <div class="col-sm-12 col-lg-3 d-flex d-lg-block flex-column align-items-center">
                     <div>
-                        <img src="../images/logo.png" alt="logo" style="min-width: 100px;">
+                        <img src="../../images/logo.png" alt="logo" style="min-width: 100px;">
                     </div>
                     <p class="opacity-75 fs-7">Terms of use | Privacy</p>
                     <p class="opacity-75 fs-7">Copyright by 2019 MovieMingle, Inc</p>
@@ -114,7 +120,7 @@ if (!empty($_SESSION["id"])) {
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous" ></script>
-    <script src="../assets/js/sing-up.jss"></script>
+    <script src="../../assets/js/sing-up.jss"></script>
 
 </body>
 </html>

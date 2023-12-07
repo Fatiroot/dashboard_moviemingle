@@ -1,15 +1,4 @@
 <?php
-//  session_start();
-// $db = mysqli_connect("localhost","root","","minglemovie");
-
-// if(!$db){
-//     echo ('connection failed'.mysqli_connect_error());
-// }
-// else{
-//     echo 'connected successfully';
-// }
-
-
     session_start();
     require_once __DIR__ . '/../vendor/autoload.php';
 

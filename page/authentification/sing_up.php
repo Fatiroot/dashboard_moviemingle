@@ -1,11 +1,11 @@
 <?php 
-include  "../function/sing_up.php";
+include  "../../function/sing_up.php";
 if (!empty($_SESSION["id"])) {
-    header('location: ../page/admin/dashboard.php');
+    header('location: ../admin/dashboard.php');
     
-}
-$error='';
-   register($connexion,$error)
+} 
+
+register($connexion);
 ?>
 
 <!DOCTYPE html>
@@ -19,13 +19,13 @@ $error='';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous" defer></script>
-    <link rel="stylesheet" href="../assets/css/register.css">
+    <link rel="stylesheet" href="../../assets/css/register.css">
 </head>
 <body>
     <nav>
         <div class="container d-flex justify-content-between gap-md-3 gap-lg-5 align-items-center">
             <div class="d-flex w-sm-100 align-items-center justify-content-between gap-3">
-                <div class="logo"><img class="img-fluid" src="../images/logo.png" alt="logo"></div>
+                <div class="logo"><img class="img-fluid" src="../../images/logo.png" alt="logo"></div>
                 <div class="menu"><i class="fa-solid fa-bars fs-3 text-white"></i></div>
             </div>
             <div class="search-wrapper flex-grow-1">
@@ -71,7 +71,13 @@ $error='';
                     <input type="password" name="c_password" id="form-confirmed-password" class="input-pd">
                     <small>Error message</small>
                 </div>
-                <span class=text-danger><?php if (isset($_POST['submit'])) {echo $error;}?></span>
+                <span class="text-danger">
+              <?php 
+               if (isset($_POST['submit'])) {
+                echo isset($_SESSION['error']) ? $_SESSION['error'] : '';
+            }
+    ?>
+</span>
                 <button type="submit" name="submit" id="submit">Create your MovieMingle account</button>
             </form>
             <p class="signin-link">Already have an account? <a href="./login.php">Sign in</a></p>
@@ -89,7 +95,7 @@ $error='';
             <div class="mt-5 row">
                 <div class="col-sm-12 col-lg-3 d-flex d-lg-block flex-column align-items-center">
                     <div>
-                        <img src="../images/logo.png" alt="logo" style="min-width: 100px;">
+                        <img src="../../images/logo.png" alt="logo" style="min-width: 100px;">
                     </div>
                     <p class="opacity-75 fs-7">Terms of use | Privacy</p>
                     <p class="opacity-75 fs-7">Copyright by 2019 MovieMingle, Inc</p>
@@ -124,6 +130,6 @@ $error='';
             </div>
         </div>
     </footer>
-    <script src="../assets/js/sing-up.js"></script>
+    <script src="../../assets/js/sing-up.js"></script>
 </body>
 </html>

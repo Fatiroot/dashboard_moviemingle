@@ -1,13 +1,17 @@
 <?php
 include  "../../config/db_connexion.php";
-if (!empty($_SESSION['id'])) {
+// if ($_session['role']!= 'admin' ) {
+//    header('location: ../authentification/login.php');
+//  }
+if (!empty($_SESSION['id']) ) {
    $id=$_SESSION['id'];
    $user_query = "SELECT * FROM `user` WHERE `id`='$id'";
     $result = mysqli_query($connexion , $user_query);
     $row = mysqli_fetch_assoc($result);
 
-}else{
-   header('location: ../../controller/login.php');
+}else {
+   header('location: ../authentification/login.php');
+
 }
 
 ?>
@@ -76,7 +80,7 @@ if (!empty($_SESSION['id'])) {
                      <li><a href="./status/show_movies.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">to watch </span></a>
                   </li>
-                     <li><a href="../../controller/log_out.php" class="text-decoration-none text-white px-4 py-2"><i
+                     <li><a href="../authentification/log_out.php" class="text-decoration-none text-white px-4 py-2"><i
                         class=" fa-solid fa-arrow-right-from-bracket"></i> <span
                         class="d-none d-md-inline">Log
                         out</span></a>

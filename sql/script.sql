@@ -20,6 +20,7 @@ CREATE TABLE movie (
 CREATE TABLE `user` (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
+    password VARCHAR(255),
     is_admin boolean
 );
 CREATE TABLE review (

@@ -8,7 +8,7 @@
     $row = mysqli_fetch_assoc($result);
 
 }else{
-   header('location: ../../../controller/login.php');
+   header('location: ../../authentification/login.php');
 }  
 addcategorie($connexion);
 
@@ -78,7 +78,7 @@ addcategorie($connexion);
                   <li><a href="../cast/show.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-regular fa-user"></i> <span class="d-none d-md-inline text-white">Cast</span></a>
                   </li>
-                  <li><a href="../../../controller/log_out.php" class="text-decoration-none text-white px-4 py-2"><i
+                  <li><a href="../../authentification/log_out.php" class="text-decoration-none text-white px-4 py-2"><i
                      class=" fa-solid fa-arrow-right-from-bracket"></i> <span
                      class="d-none d-md-inline">Log
                      out</span></a>
