@@ -43,7 +43,6 @@ CREATE TABLE favoris (
 );
 CREATE TABLE to_watch (
      id INT AUTO_INCREMENT PRIMARY KEY,
-  
     user_id int,
     movie_id int,
     FOREIGN KEY (user_id) REFERENCES `user`(id),
